@@ -5,8 +5,10 @@ export default class Queue {
     }
 
     enqueue(value) {
-        this[this.key] = value;
-        this.key += 1;
+        if (value < this.capacity) {
+            this[this.key] = value;
+            this.key += 1;
+        }
     }
 
     dequeue() {
@@ -21,3 +23,15 @@ export default class Queue {
         return this.key;
     }
 };
+
+let Q = new Queue(10);
+Q.enqueue('A');
+Q.enqueue('B');
+Q.enqueue('C');
+Q.enqueue('D');
+Q.enqueue('E');
+Q.dequeue();
+Q.dequeue();
+Q.dequeue();
+Q.peek();
+Q.count();
