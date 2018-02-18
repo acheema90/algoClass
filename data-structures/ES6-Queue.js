@@ -2,25 +2,32 @@ export default class Queue {
     constructor(capacity){
         this.capacity = capacity || Math.Infinity;
         this.key = 0;
+        this.length = 0;
     }
 
     enqueue(value) {
-        if (value < this.capacity) {
+        if (this.length < this.capacity) {
             this[this.key] = value;
             this.key += 1;
+            this.length += 1;
         }
     }
 
     dequeue() {
-        this[0] = null;
+        for (let i = 0; i < this.length; i += 1) {
+            this[i] = this [i+1];
+        }
+        this.key -= 1;
+        this.length -= 1;
+        delete this[this.key];
     }
 
     peek() {
-        return this[0];
+        console.log(this[0]);
     }
 
     count() {
-        return this.key;
+        console.log(this.key);
     }
 };
 
@@ -30,8 +37,11 @@ Q.enqueue('B');
 Q.enqueue('C');
 Q.enqueue('D');
 Q.enqueue('E');
+console.log(Q);
 Q.dequeue();
-Q.dequeue();
-Q.dequeue();
+console.log(Q);
 Q.peek();
 Q.count();
+Q.dequeue();
+Q.dequeue();
+console.log(Q);
