@@ -20,3 +20,13 @@ function reverseStr(str) {
 };
 
 reverseStr('abcdefg');
+
+// Non-recursive
+function reverseIt(str) {
+    var rev = [];
+    var arr = str.split('');
+    while (arr.length !== 0) {
+      rev.push(arr.pop());
+    }
+    return rev.join('');
+}
