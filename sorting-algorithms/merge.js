@@ -56,18 +56,20 @@ function mergeSort(m) {
 
 function merge(left, right) {
     let result = [];
-    while (left.length !==0 && right.length !==0) {
-        if (left[0] <= right[0]) {
-            result.push(left.shift());
+    let iL = 0;
+    let iR = 0;
+    while (iL < left.length && iR < right.length) {
+        if (left[iL] <= right[iR]) {
+            result.push(left[iL++]);
         } else {
-            result.push(right.shift());
+            result.push(right[iR++]);
         }
     }
-    while (left.length !== 0) {
-        result.push(left.shift());
+    while (iL < left.length) {
+        result.push(left[iL++]);
     }
-    while (right.length !== 0) {
-        result.push(right.shift());
+    while (iR < right.length) {
+        result.push(right[iR++]);
     }
     return result;
 }
