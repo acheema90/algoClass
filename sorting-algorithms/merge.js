@@ -28,6 +28,7 @@ subarrays for regular merge sort: [ [1], [2], [4], [5], [9] ]
 subarrays for natural merge sort: [ [1,2], [4,5], [9] ]
 
 */
+// O(nlogn)
 function mergeSort(m) {
     // Base case: list of 0 or 1 elements is sorted by definition.
     if (m.length <= 1) {
