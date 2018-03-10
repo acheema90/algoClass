@@ -6,13 +6,13 @@ function quickSort(arr, left, right) {
    let pivot;
    let partitionIndex;
    if (left < right) {
-    pivot = right;
-    partitionIndex = partition(arr, pivot, left, right);
-    //sort left and right
-    quickSort(arr, left, partitionIndex - 1);
-    quickSort(arr, partitionIndex + 1, right);
-    }
-    return arr;
+       pivot = right;
+       partitionIndex = partition(arr, pivot, left, right);
+       //sort left and right
+       quickSort(arr, left, partitionIndex - 1);
+       quickSort(arr, partitionIndex + 1, right);
+   }
+   return arr;
 }
 
 function partition(arr, pivot, left, right) {
