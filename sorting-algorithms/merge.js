@@ -28,3 +28,48 @@ subarrays for regular merge sort: [ [1], [2], [4], [5], [9] ]
 subarrays for natural merge sort: [ [1,2], [4,5], [9] ]
 
 */
+function mergeSort(m) {
+    // Base case: list of 0 or 1 elements is sorted by definition.
+    if (m.length <= 1) {
+        return m;
+    }
+    /* Recursive case:
+     * Divide the list into equal-sized sublists.
+     * Recursively sort both sublists
+     * Then merge the sorted sublists
+    */
+    let left = [];
+    let right = [];
+    for (let i = 0; i < m.length; i += 1) {
+        if (i < m.length/2) {
+            left.push(m[i]);
+        } else {
+            right.push(m[i]);
+        }
+    }
+    // Recursively sort both sublists
+    left = mergeSort(left);
+    right = mergeSort(right);
+    // then merge the sorted sublists
+    return merge(left, right);
+}
+
+function merge(left, right) {
+    let result = [];
+    while (left.length !==0 && right.length !==0) {
+        if (left[0] <= right[0]) {
+            result.push(left.shift());
+        } else {
+            result.push(right.shift());
+        }
+    }
+    while (left.length !== 0) {
+        result.push(left.shift());
+    }
+    while (right.length !== 0) {
+        result.push(right.shift());
+    }
+    return result;
+}
+
+mergeSort([9,8,1,3,5,6,7,11,0,4]); // [0, 1, 3, 4, 5, 6, 7, 8, 9, 11]
