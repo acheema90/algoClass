@@ -19,13 +19,13 @@ function partition(arr, pivot, left, right) {
    let pivotValue = arr[pivot];
    let partitionIndex = left;
    for (let i = left; i < right; i += 1) {
-    if (arr[i] < pivotValue) {
-      swap(arr, i, partitionIndex);
-      partitionIndex += 1;
-    }
-  }
-  swap(arr, right, partitionIndex);
-  return partitionIndex;
+       if (arr[i] < pivotValue) {
+           swap(arr, i, partitionIndex);
+           partitionIndex += 1;
+       }
+   }
+   swap(arr, right, partitionIndex);
+   return partitionIndex;
 }
 
 function swap(arr, i, j) {
