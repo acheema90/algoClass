@@ -187,6 +187,20 @@ class BinarySearchTree {
         cb(root.value);
     }
 
+    minValue(node = this.root) {
+        if(node && node.left!==null) {
+            return this.minValue(node.left);
+        }
+        return node.value;
+    }
+
+    maxValue(node = this.root) {
+        if(node && node.right!==null) {
+            this.maxValue(node.right);
+        }
+        return node.value;
+    }
+
     checkIfFull() {
 
     }
@@ -213,6 +227,8 @@ btree.insert(14);
 btree.insert(18);
 btree.insert(25);
 console.log(btree);
+btree.minValue();
+btree.maxValue();
 let printTree = (val) => {
     console.log(val);
 };
