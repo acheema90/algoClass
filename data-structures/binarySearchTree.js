@@ -89,7 +89,60 @@ class BinarySearchTree {
     }
 
     contains(value) {
+        if (value === this.root) {
+            return true;
+        } else {
+            return this.search(this.root, value);
+        }
+    }
 
+    search(root, value) {
+        if (value === root.value) {
+            return true;
+        }
+        if (value < root.value && root.left !== null) {
+            if (value === root.left.value) {
+                return true;
+            } else {
+                return this.search(root.left, value);
+            }
+        } else if (value > root.value && root.right !== null) {
+            if (value === root.right.value) {
+                return true;
+            } else {
+                return this.search(root.right, value);
+            }
+        }
+        return false;
+    }
+
+    removeNode(value) {
+        if (value === this.root) {
+            // hmmm
+            this.root.value = null;
+        }
+        else {
+            this.searchAndDestroy(this.root, value);
+        }
+    }
+
+    searchAndDestroy(root, value) {
+        if (value === root.value) {
+            root.value = null;
+        }
+        if (value < root.value && root.left !== null) {
+            if (value === root.left.value) {
+                root.left.value = null;
+            } else {
+                return this.searchAndDestroy(root.left, value);
+            }
+        } else if (value > root.value && root.right !== null) {
+            if (value === root.right.value) {
+                root.right.value = null;
+            } else {
+                return this.searchAndDestroy(root.right, value);
+            }
+        }
     }
 
     traverseDepthFirst_inOrder(cb) {
