@@ -116,32 +116,43 @@ class BinarySearchTree {
         return false;
     }
 
-    removeNode(value) {
-        if (value === this.root) {
-            // hmmm
-            this.root.value = null;
-        }
-        else {
-            this.searchAndDestroy(this.root, value);
-        }
+    remove(value) {
+        this.root = this.removeNode(this.root, value);
     }
 
-    searchAndDestroy(root, value) {
-        if (value === root.value) {
-            root.value = null;
+    removeNode(node, value) {
+        // base case
+        if (node === null) {
+            return null;
         }
-        if (value < root.value && root.left !== null) {
-            if (value === root.left.value) {
-                root.left.value = null;
-            } else {
-                return this.searchAndDestroy(root.left, value);
+        // recursive cases
+        if (value < node.value) {
+            node.left = this.removeNode(node.left, value);
+            return node;
+        } else if (value > node.value) {
+            node.right = this.removeNode(node.right, value);
+            return node;
+        }
+        // base case: value === node.value
+        else {
+            // case 1: leaf node
+            if (node.left === null && node.right === null) {
+                node = null;
+                return node;
             }
-        } else if (value > root.value && root.right !== null) {
-            if (value === root.right.value) {
-                root.right.value = null;
-            } else {
-                return this.searchAndDestroy(root.right, value);
+            // case 2: a node with 1 child
+            if (node.left === null) {
+                node = node.right;
+                return node;
+            } else if (node.right === null) {
+                node = node.left;
+                return node;
             }
+            // case 3: a node with both children
+            let aux = this.minNode(node.right);
+            node.value = aux.value;
+            node.right = this.removeNode(node.right, aux.value);
+            return node;
         }
     }
 
@@ -187,18 +198,18 @@ class BinarySearchTree {
         cb(root.value);
     }
 
-    minValue(node = this.root) {
+    minNode(node = this.root) {
         if(node && node.left!==null) {
-            return this.minValue(node.left);
+            return this.minNode(node.left);
         }
-        return node.value;
+        return node;
     }
 
-    maxValue(node = this.root) {
+    maxNode(node = this.root) {
         if(node && node.right!==null) {
-            this.maxValue(node.right);
+            return this.maxNode(node.right);
         }
-        return node.value;
+        return node;
     }
 
     checkIfFull() {
@@ -227,11 +238,13 @@ btree.insert(14);
 btree.insert(18);
 btree.insert(25);
 console.log(btree);
-btree.minValue();
-btree.maxValue();
+btree.minNode();
+btree.maxNode();
 let printTree = (val) => {
     console.log(val);
 };
 btree.traverseDepthFirst_inOrder(printTree);
 btree.traverseDepthFirst_preOrder(printTree);
 btree.traverseDepthFirst_postOrder(printTree);
+btree.remove(5);
+console.log(btree);
