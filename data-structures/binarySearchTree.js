@@ -160,7 +160,17 @@ class BinarySearchTree {
     }
 
     traverseDepthFirst_preOrder(cb) {
+        this.preOrderTraverse(this.root, cb);
+    }
 
+    preOrderTraverse(root, cb) {
+        cb(root.value);
+        if (root.left !== null) {
+            this.preOrderTraverse(root.left, cb);
+        }
+        if (root.right !== null) {
+            this.preOrderTraverse(root.right, cb);
+        }
     }
 
     traverseDepthFirst_postOrder(cb) {
@@ -197,3 +207,4 @@ let printTree = (val) => {
     console.log(val);
 };
 btree.traverseDepthFirst_inOrder(printTree);
+btree.traverseDepthFirst_preOrder(printTree);
