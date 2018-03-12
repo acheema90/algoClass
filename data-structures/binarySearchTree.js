@@ -174,7 +174,17 @@ class BinarySearchTree {
     }
 
     traverseDepthFirst_postOrder(cb) {
+        this.postOrderTraverse(this.root, cb);
+    }
 
+    postOrderTraverse(root, cb) {
+        if (root.left !== null) {
+            this.postOrderTraverse(root.left, cb);
+        }
+        if (root.right !== null) {
+            this.postOrderTraverse(root.right, cb);
+        }
+        cb(root.value);
     }
 
     checkIfFull() {
@@ -208,3 +218,4 @@ let printTree = (val) => {
 };
 btree.traverseDepthFirst_inOrder(printTree);
 btree.traverseDepthFirst_preOrder(printTree);
+btree.traverseDepthFirst_postOrder(printTree);
