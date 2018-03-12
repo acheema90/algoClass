@@ -30,9 +30,6 @@ bsTree.traverseDepthFirst_postOrder(callback)
 => undefined
 Invoke the callback for every node in a depth-first post-order (visit the current node after its child nodes)
 
-bsTree.isValid()
-=> returns true if BST is a valid BST otherwise returns false. This method is useful for checking your other methods.
-
 bsTree.removeNode(value)
 => node
 Remove node from tree.
@@ -45,14 +42,11 @@ bsTree.checkIfBalanced()
 => true/false
 For this exercise, let's say that a tree is balanced if the minimum height and the maximum height differ by no more than 1. The height for a branch is the number of levels below the root.
 
-
-*** Additional Exercises:
-A binary search tree was created by iterating over an array and inserting each element into the tree. Given a binary search tree with no duplicates, how many different arrays would result in the creation of this tree.
-
 */
 class BinarySearchTree {
     constructor() {
         this.root = null;
+        this.full = true;
     }
 
     createNode (value) {
@@ -212,12 +206,34 @@ class BinarySearchTree {
         return node;
     }
 
+    // a binary tree is full if every node has either 0 or 2 children
     checkIfFull() {
-
+        this.traverseDepthFirst_inOrder(this.checkFull.bind(this));
+        return this.full;
     }
 
-    checkIfBalanced() {
+    checkFull(node) {
+        if ((node.left !== null && node.right === null) ||
+            (node.left===null && node.right!==null)) {
+            this.full = false;
+        }
+    }
 
+    // a tree is balanced if the min height and the max height differ by no more than 1
+    // the height for a branch is the number of levels below the root
+    checkIfBalanced() {
+        let heights = [];
+        let recurse = function(node, height) {
+            if (!node.left && !node.right) {
+                return heights.push(height);
+            }
+            node.left && recurse(node.left, height+1);
+            node.right && recurse(node.right, height+1);
+        };
+        recurse(this, 1);
+        let min = Math.min.apply(null, heights);
+        let max = Math.max.apply(null, heights);
+        return max-min <= 1;
     }
 }
 
@@ -246,5 +262,6 @@ let printTree = (val) => {
 btree.traverseDepthFirst_inOrder(printTree);
 btree.traverseDepthFirst_preOrder(printTree);
 btree.traverseDepthFirst_postOrder(printTree);
+btree.checkIfFull();
 btree.remove(5);
-console.log(btree);
+btree.checkIfFull();
