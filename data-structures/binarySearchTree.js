@@ -50,45 +50,83 @@ For this exercise, let's say that a tree is balanced if the minimum height and t
 A binary search tree was created by iterating over an array and inserting each element into the tree. Given a binary search tree with no duplicates, how many different arrays would result in the creation of this tree.
 
 */
+class BinarySearchTree {
+    constructor() {
+        this.root = null;
+    }
 
-function BinarySearchTree (value) {
-  this.value = value;
-  this.left = null;
-  this.right = null;
+    createNode (value) {
+        return {
+            value: value,
+            left: null,
+            right: null
+        };
+    }
+
+    insert(value) {
+        var node = this.createNode(value);
+        if (this.root === null) {
+            this.root = node;
+        } else {
+            this.insertNode(this.root, node);
+        }
+    }
+
+    insertNode(root, node) {
+        if (node.value < root.value) {
+            if (root.left === null) {
+                root.left = node;
+            } else {
+                this.insertNode(root.left, node);
+            }
+        } else if (node.value > root.value) {
+            if (root.right === null) {
+                root.right = node;
+            } else {
+                this.insertNode(root.right, node);
+            }
+        }
+    }
+
+    contains(value) {
+
+    }
+
+    traverseDepthFirst_inOrder(cb) {
+
+    }
+
+    traverseDepthFirst_preOrder(cb) {
+
+    }
+
+    traverseDepthFirst_postOrder(cb) {
+
+    }
+
+    checkIfFull() {
+
+    }
+
+    checkIfBalanced() {
+
+    }
 }
 
-BinarySearchTree.prototype.insert = function(value) {
-  // implement me...
-};
-// Time complexity:
-
-BinarySearchTree.prototype.contains = function(value) {
-  // implement me...
-};
-// Time complexity:
-
-BinarySearchTree.prototype.traverseDepthFirst_inOrder = function(fn) {
-  // implement me...
-};
-// Time complexity:
-
-BinarySearchTree.prototype.traverseDepthFirst_preOrder = function(fn) {
-  // implement me...
-};
-// Time complexity:
-
-BinarySearchTree.prototype.traverseDepthFirst_postOrder = function(fn) {
-  // implement me...
-};
-// Time complexity:
-
-
-BinarySearchTree.prototype.checkIfFull = function() {
-  // implement me...
-};
-// Time complexity:
-
-BinarySearchTree.prototype.checkIfBalanced = function() {
-  // implement me...
-};
-// Time complexity:
+let btree = new BinarySearchTree();
+btree.insert(11);
+btree.insert(7);
+btree.insert(15);
+btree.insert(5);
+btree.insert(9);
+btree.insert(13);
+btree.insert(20);
+btree.insert(3);
+btree.insert(6);
+btree.insert(8);
+btree.insert(10);
+btree.insert(12);
+btree.insert(14);
+btree.insert(18);
+btree.insert(25);
+console.log(btree);
