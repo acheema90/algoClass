@@ -88,43 +88,63 @@ Given a directed graph and two nodes in the graph, write a function that indicat
 
 
 function Graph () {
-  this._nodes = {};
+    this._nodes = {};
 }
 
 Graph.prototype.addNode = function(value) {
-  // implement me...
+    if (value === undefined) {
+        return;
+    }
+    this._nodes[value] = this._nodes[value] || [];
 };
-// Time complexity:
+// Time complexity: O(1)
 
-Graph.prototype.removeNode = function(value) {
-  // implement me...
+//remove node from every other node and the nodes object
+Graph.prototype.removeNode = function(item) {
+    this._nodes[item].forEach((node) => {
+        let itemIndex = this._nodes[node].indexOf(item);
+        this._nodes[node].splice(itemIndex, 1);
+    });
+    delete this._nodes[item];
 };
-// Time complexity:
+// Time complexity: O(n^2)
 
 Graph.prototype.contains = function(value) {
-  // implement me...
+  return this._nodes[value] !== undefined;
 };
-// Time complexity:
+// Time complexity: O(1)
 
 Graph.prototype.addEdge = function(value1, value2) {
-  // implement me...
+    if (!this._nodes[value1] || !this._nodes[value2]) {
+        return 'invalid node value';
+    }
+    this._nodes[value1].push(value2);
+    this._nodes[value2].push(value1);
 };
-// Time complexity:
+// Time complexity: O(1)
 
 Graph.prototype.removeEdge = function(value1, value2) {
-  // implement me...
+    if (!this._nodes[value1] || !this._nodes[value2]) {
+        return 'invalid node value';
+    }
+    let val1Index = this._nodes[value2].indexOf(value1); // O(n)
+    let val2Index = this._nodes[value1].indexOf(value2); // O(n)
+    this._nodes[value1].splice(val2Index, 1); // O(n)
+    this._nodes[value2].splice(val1Index, 1); // O(n)
 };
-// Time complexity:
+// Time complexity: O(n)
 
 Graph.prototype.hasEdge = function(value1, value2) {
-  // implement me...
+    return this._nodes[value1].indexOf(value2) !== -1;
 };
-// Time complexity:
+// Time complexity: O(n). indexOf is O(n)!
 
 Graph.prototype.forEach = function(fn) {
-  // implement me...
+  for (let node in this._nodes) {
+      fn(node, this._nodes[node], this._nodes);
+  });
 };
-// Time complexity:
+// Time complexity: at least O(n), depends on what fn does
 
 Graph.prototype.traverseDepthFirst = function(value, fn, visited, distance) {
   // implement me...
