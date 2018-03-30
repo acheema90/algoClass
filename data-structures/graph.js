@@ -142,16 +142,44 @@ Graph.prototype.hasEdge = function(value1, value2) {
 Graph.prototype.forEach = function(fn) {
   for (let node in this._nodes) {
       fn(node, this._nodes[node], this._nodes);
-  });
+  }
 };
 // Time complexity: at least O(n), depends on what fn does
 
 Graph.prototype.traverseDepthFirst = function(value, fn, visited, distance) {
   // implement me...
 };
-// Time complexity:
+// Time complexity: O(m+n)
 
 Graph.prototype.traverseBreadthFirst = function(value, fn) {
   // implement me...
 };
-// Time complexity:
+// Time complexity: O(m+n)
+
+let graph = new Graph();
+graph.addNode(1);
+graph.addNode(2);
+graph.addNode(3);
+graph.addNode(4);
+graph.addNode(5);
+console.log(graph._nodes, 'should have 5');
+graph.removeNode(5);
+console.log(graph._nodes, 'should NOT have 5');
+console.log(graph.contains(4), 'should be true');
+console.log(graph.contains(7), 'should be false');
+graph.addEdge(1,2);
+graph.addEdge(1,4);
+graph.addEdge(3,2);
+graph.addEdge(2,4);
+graph.addEdge(3,4);
+console.log(graph._nodes);
+graph.removeEdge(4,3);
+console.log(graph._nodes);
+console.log(graph.hasEdge(1,2), 'should be true');
+console.log(graph.hasEdge(1,3), 'should be false');
+graph.forEach(function(node, neighbors) {
+  console.log(node, 'has neighbors:', neighbors);
+});
+graph.addNode(5);
+graph.addEdge(3,5);
+console.log(graph._nodes);
