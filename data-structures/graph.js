@@ -165,7 +165,24 @@ Graph.prototype.traverseDepthFirst = function(value, fn, visited, distance) {
 // Time complexity: O(m+n)
 
 Graph.prototype.traverseBreadthFirst = function(value, fn) {
-  // implement me...
+    if (!this._nodes[value] || typeof fn !== 'function') {
+        return 'invalid call';
+    }
+    let visited = {};
+    let queue = [value];
+    visited[value] = 0;
+    while (queue.length) {
+        let node = queue.shift();
+        fn(node, visited[node]);
+        let items = this._nodes[node].filter((item) => {
+            if (visited[item] === undefined) {
+                visited[item] = visited[node] + 1;
+                return true;
+            }
+        });
+        queue = queue.concat(items);
+    }
+    console.log(visited);
 };
 // Time complexity: O(m+n)
 
@@ -198,3 +215,7 @@ graph.addEdge(3,5);
 console.log(graph._nodes);
 let traverseDF = [];
 graph.traverseDepthFirst(1, (val, dist) => traverseDF.push([val, dist]));
+console.log(traverseDF, 'should be [ [ 1, 0 ], [ 2, 1 ], [ 3, 2 ], [ 5, 3 ], [ 4, 2 ] ]');
+let traverseBF = [];
+graph.traverseBreadthFirst(1, (val, dist) => traverseBF.push([val, dist]));
+console.log(traverseBF, 'should be [ [ 1, 0 ], [ 2, 1 ], [ 4, 1 ], [ 3, 2 ], [ 5, 3 ] ]');
