@@ -147,7 +147,20 @@ Graph.prototype.forEach = function(fn) {
 // Time complexity: at least O(n), depends on what fn does
 
 Graph.prototype.traverseDepthFirst = function(value, fn, visited, distance) {
-  // implement me...
+    if (!this._nodes[value] || typeof fn !== 'function') {
+        return 'invalid call';
+    }
+    visited = visited || {};
+    distance = distance || 0;
+    fn(value, distance);
+    visited[value] = true;
+    this._nodes[value].forEach((edge) => {
+        if (visited[edge]) {
+            return;
+        }
+        distance += 1;
+        this.traverseDepthFirst(edge, fn, visited, distance);
+    });
 };
 // Time complexity: O(m+n)
 
@@ -183,3 +196,5 @@ graph.forEach(function(node, neighbors) {
 graph.addNode(5);
 graph.addEdge(3,5);
 console.log(graph._nodes);
+let traverseDF = [];
+graph.traverseDepthFirst(1, (val, dist) => traverseDF.push([val, dist]));
