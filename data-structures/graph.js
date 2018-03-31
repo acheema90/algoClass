@@ -182,7 +182,6 @@ Graph.prototype.traverseBreadthFirst = function(value, fn) {
         });
         queue = queue.concat(items);
     }
-    console.log(visited);
 };
 // Time complexity: O(m+n)
 
